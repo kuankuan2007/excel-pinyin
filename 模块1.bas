@@ -3537,3 +3537,30 @@ getpy = getpy & pinyin(Mid(str, i, 1))
 Next i
 
 End Function
+Function getszm(str)
+
+p = getpy(str)
+flag = 0
+If Len(p) = 0 Then
+    getszm = "[Empty]"
+Else
+    getszm = Mid(p, 1, 1)
+    For i = 1 To Len(p)
+    
+        If flag = 1 Then
+            getszm = getszm & Mid(p, i, 1)
+        End If
+        If Mid(p, i, 1) = " " Then
+            flag = 1
+        Else
+            flag = 0
+        End If
+    Next i
+End If
+
+
+
+
+
+
+End Function
