@@ -1,6 +1,6 @@
 Attribute VB_Name = "Ä£¿é1"
 
-Function pinyinA(p)
+Function pinyinA(p, Optional replaceWord As String = "?")
 
 Select Case p
 
@@ -1005,14 +1005,14 @@ Case -8745 To -8745: pinyinA = "feng "
 Case -8744 To -8744: pinyinA = "ren "
 Case -8743 To -8743: pinyinA = "xiang "
 
-Case Else: pinyinA = "? "
+Case Else: pinyinA = replaceWord & " "
 
 End Select
 
 End Function
 
 
-Function pinyinB(p)
+Function pinyinB(p, Optional replaceWord As String = "?")
 
 Select Case p
 
@@ -2017,12 +2017,12 @@ Case -5957 To -5957: pinyinB = "wu "
 Case -5956 To -5956: pinyinB = "biao "
 Case -5955 To -5955: pinyinB = "qi "
 
-Case Else: pinyinB = "? "
+Case Else: pinyinB = replaceWord & " "
 
 End Select
 
 End Function
-Function pinyinC(p)
+Function pinyinC(p, Optional replaceWord As String = "?")
 
 Select Case p
 
@@ -3027,12 +3027,12 @@ Case -3331 To -3331: pinyinC = "man "
 Case -3330 To -3168: pinyinC = "mang "
 Case -3167 To -3167: pinyinC = "ma "
 
-Case Else: pinyinC = "? "
+Case Else: pinyinC = replaceWord & " "
 
 End Select
 
 End Function
-Function pinyinD(p)
+Function pinyinD(p, Optional replaceWord As String = "?")
 
 Select Case p
 
@@ -3503,24 +3503,24 @@ Case -2052 To -2052: pinyinD = "qiu "
 Case -2051 To -2051: pinyinD = "han "
 Case -2050 To -2050: pinyinD = "zha "
 
-Case Else: pinyinD = "? "
+Case Else: pinyinD = replaceWord & " "
 
 End Select
 
 End Function
 
-Function pinyin(p As String) As String
+Function pinyin(p As String, Optional replaceWord As String = "?") As String
 
 i = Asc(p)
 
 Select Case i
 
-Case -20319 To -8743: pinyin = pinyinA(i)
-Case -8742 To -5955: pinyin = pinyinB(i)
-Case -5954 To -3167: pinyin = pinyinC(i)
-Case -3166 To -2050: pinyin = pinyinD(i)
+Case -20319 To -8743: pinyin = pinyinA(i, replaceWord)
+Case -8742 To -5955: pinyin = pinyinB(i, replaceWord)
+Case -5954 To -3167: pinyin = pinyinC(i, replaceWord)
+Case -3166 To -2050: pinyin = pinyinD(i, replaceWord)
 
-Case Else: pinyin = "? "
+Case Else: pinyin = replaceWord & " "
 
 End Select
 
@@ -3528,21 +3528,24 @@ End Function
 
 
 
-Function getpy(str)
-
-For i = 1 To Len(str)
-
-getpy = getpy & pinyin(Mid(str, i, 1))
-
-Next i
+Function getpy(str As String, Optional replaceWord As String = "?", Optional emptyWord As String = "[Empty]") As String
+If Len(str) = 0 Then
+    getpy = emptyWord
+Else
+    For i = 1 To Len(str)
+    
+    getpy = getpy & pinyin(Mid(str, i, 1), replaceWord)
+    
+    Next i
+End If
 
 End Function
-Function getszm(str)
+Function getszm(str As String, Optional replaceWord As String = "?", Optional emptyWord As String = "[Empty]") As String
 
-p = getpy(str)
+p = getpy(str, replaceWord, emptyWord)
 flag = 0
-If Len(p) = 0 Then
-    getszm = "[Empty]"
+If Len(p) = 0 Or p = emptyWord Then
+    getszm = emptyWord
 Else
     getszm = Mid(p, 1, 1)
     For i = 1 To Len(p)
