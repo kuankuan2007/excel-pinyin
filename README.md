@@ -10,19 +10,31 @@
 
 使用函数getszm将字符串转化为拼音首字母
 
+replaceWord参数控制未知字符的替换值
+
+emptyWord参数控制空字符的返回值
+
 拼音取常用拼音，多音字可能会出现错误
 
 拼音之间使用空格分隔
 
 ### e.g.
 
-=getpy("宽宽的作品")
+=getpy("这里是宽宽的作品,我是宽宽","^")
 
-->kuan kuan de zuo pin 
+->kuan kuan de zuo pin ^ wo shi kuan kuan
+
+=getpy("这里是宽宽的作品,我是宽宽")
+
+->kuan kuan de zuo pin ? wo shi kuan kuan
 
 =getszm("宽宽的作品")
 
 ->kkdzp
+
+=getszm("","?","空")
+
+->空
 
 ## 关于作者
 
